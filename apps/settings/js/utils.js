@@ -62,7 +62,7 @@ function audioPreview(element) {
   var source = audio.src;
   var playing = !audio.paused;
 
-  audio.src = 'style/ringtones/' + element.querySelector('input').value;
+  audio.src = 'resources/ringtones/' + element.querySelector('input').value;
   if (source == audio.src && playing) {
     audio.stop();
   } else {
@@ -206,7 +206,6 @@ function bug344618_polyfill() {
     slider.onmousedown = onClick;
     thumb.onmousedown = onDragStart;
     label.onmousemove = onDragMove;
-    label.onmouseout = onDragStop;
     label.onmouseup = onDragStop;
 
     // expose the 'refresh' method on <input>
