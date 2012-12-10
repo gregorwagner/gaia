@@ -5,8 +5,6 @@
 
 var MessageManager = {
   init: function mm_init() {
-    // Init PhoneNumberManager for solving country code issue.
-    PhoneNumberManager.init();
     // Init Pending DB. Once it will be loaded will render threads
     PendingMsgManager.init(function() {
       // Init first time
@@ -140,8 +138,7 @@ var MessageManager = {
   createFilter: function mm_createFilter(num) {
     var filter = new MozSmsFilter();
     if (num) {
-      filter.numbers =
-        [PhoneNumberManager.getNormalizedInternationalNumber(num)];
+      filter.numbers = [num];
     } else {
       filter.numbers = [''];
     }
@@ -168,8 +165,7 @@ var MessageManager = {
           return;
         }
         var filterNum = filter ? filter.numbers[0] : null;
-        var numNormalized = PhoneNumberManager.
-          getNormalizedInternationalNumber(filterNum);
+        var numNormalized = filterNum;
         //TODO: Refine the pending message append with non-blocking method.
         PendingMsgManager.getMsgDB(numNormalized, function msgCb(pendingMsgs) {
           if (!pendingMsgs) {
@@ -496,8 +492,7 @@ var ThreadListUI = {
         var num = message.delivery == 'received' ?
         message.sender : message.receiver;
 
-        var numNormalized =
-          PhoneNumberManager.getNormalizedInternationalNumber(num);
+        var numNormalized = num;
         if (!message.read) {
           if (unreadThreads.indexOf(numNormalized) == -1) {
             unreadThreads.push(numNormalized);
@@ -1175,8 +1170,7 @@ var ThreadUI = {
         } else {
           var num = MessageManager.getNumFromHash();
         }
-        var numNormalized =
-          PhoneNumberManager.getNormalizedInternationalNumber(num);
+        var numNormalized = num;
         // Retrieve text
         var text = this.input.value;
         // Ensure that resendText isn't a MouseEvent
@@ -1585,33 +1579,31 @@ if (!window.location.hash.length) {
       }
     }
 
-    PhoneNumberManager.init(function phoneNMReady() {
-      navigator.mozApps.getSelf().onsuccess = function(evt) {
-        var app = evt.target.result;
-        var iconURL = NotificationHelper.getIconURI(app);
+    navigator.mozApps.getSelf().onsuccess = function(evt) {
+      var app = evt.target.result;
+      var iconURL = NotificationHelper.getIconURI(app);
 
-        // Stashing the number at the end of the icon URL to make sure
-        // we get it back even via system message
-        iconURL += '?sms-received?' + number;
+      // Stashing the number at the end of the icon URL to make sure
+      // we get it back even via system message
+      iconURL += '?sms-received?' + number;
 
-        var goToMessage = function() {
-          app.launch();
-          showThreadFromSystemMessage(number);
-        };
-
-        ContactDataManager.getContactData(message.sender,
-        function gotContact(contact) {
-          var sender;
-          if (contact.length && contact[0].name) {
-            sender = contact[0].name;
-          } else {
-            sender = message.sender;
-          }
-
-          NotificationHelper.send(sender, message.body, iconURL, goToMessage);
-        });
+      var goToMessage = function() {
+        app.launch();
+        showThreadFromSystemMessage(number);
       };
-    });
+
+      ContactDataManager.getContactData(message.sender,
+      function gotContact(contact) {
+        var sender;
+        if (contact.length && contact[0].name) {
+          sender = contact[0].name;
+        } else {
+          sender = message.sender;
+        }
+
+        NotificationHelper.send(sender, message.body, iconURL, goToMessage);
+      });
+    };
   });
 
   window.navigator.mozSetMessageHandler('notification',

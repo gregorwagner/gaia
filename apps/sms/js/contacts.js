@@ -19,26 +19,13 @@ var ContactDataManager = {
     if (!navigator.mozContacts) {
       return;
     }
-    var numNormalized = PhoneNumberManager.getNormalizedNumber(number);
-    // Based on E.164 (http://en.wikipedia.org/wiki/E.164)
-    if (number.length < 8) {
-      var options = {
-        filterBy: ['tel'],
-        filterOp: 'equals',
-        filterValue: number
-      };
-    } else {
-      // Based on E.164 (http://en.wikipedia.org/wiki/E.164)
-      // Some locals added a '0' at the beggining (UK, Sweden...)
-      if (numNormalized[0] == 0 || numNormalized[0] == '0') {
-        var numNormalized = Number(numNormalized.toString().substr(1));
-      }
-      var options = {
-        filterBy: ['tel'],
-        filterOp: 'contains',
-        filterValue: numNormalized
-      };
-    }
+    var numNormalized = number;
+    var options = {
+      filterBy: ['tel'],
+      filterOp: 'equals',
+      filterValue: number
+    };
+
     var cacheResult = this.contactData[numNormalized];
     if (cacheResult) {
       var cacheArray = cacheResult ? [cacheResult] : [];
@@ -57,8 +44,7 @@ var ContactDataManager = {
           var telInfo;
           // Retrieving the info of the telephone
           for (var i = 0; i < cacheData.tel.length; i++) {
-            var tmpNormalized =
-              PhoneNumberManager.getNormalizedNumber(cacheData.tel[i].value);
+            var tmpNormalized = cacheData.tel[i].value;
             if (tmpNormalized == numNormalized) {
               telInfo = cacheData.tel[i];
               break;
@@ -66,8 +52,7 @@ var ContactDataManager = {
           }
           // Check if phone type and carrier have changed
           for (var i = 0; i < result[0].tel.length; i++) {
-            var tmpNormalized =
-              PhoneNumberManager.getNormalizedNumber(result[0].tel[i].value);
+            var tmpNormalized = result[0].tel[i].value;
             if (tmpNormalized == numNormalized) {
               if (!(result[0].tel[i].type == telInfo.type &&
                 result[0].tel[i].carrier == telInfo.carrier)) {
