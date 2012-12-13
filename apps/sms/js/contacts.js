@@ -22,7 +22,7 @@ var ContactDataManager = {
     var numNormalized = number;
     var options = {
       filterBy: ['tel'],
-      filterOp: 'equals',
+      filterOp: 'contains',
       filterValue: number
     };
 
