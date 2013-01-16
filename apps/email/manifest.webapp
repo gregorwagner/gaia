@@ -11,7 +11,6 @@
      { "alarm": "/index.html" }
   ],
   "permissions": {
-    "alarms":{},
     "contacts":{ "access": "readcreate" },
     "desktop-notification":{},
     "device-storage:music":{ "access": "readcreate" },
