@@ -232,14 +232,14 @@ var MessageManager = {
   },
 
   send: function mm_send(number, text, callback, errorHandler) {
-    var req = navigator.mozSms.send(number, text);
+    /*var req = navigator.mozSms.send(number, text);
     req.onsuccess = function onsuccess(e) {
       callback && callback(req.result);
     };
 
     req.onerror = function onerror(e) {
       errorHandler && errorHandler(number);
-    };
+    };*/
   },
 
   deleteMessage: function mm_deleteMessage(id, callback) {

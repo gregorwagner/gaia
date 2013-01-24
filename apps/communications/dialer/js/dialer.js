@@ -197,7 +197,7 @@ var CallHandler = (function callHandler() {
       KeypadManager.updatePhoneNumber('', 'begin', true);
     };
 
-    TelephonyHelper.call(number, oncall, connected, disconnected);
+    //TelephonyHelper.call(number, oncall, connected, disconnected);
   }
 
   /* === Attention Screen === */
