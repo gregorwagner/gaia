@@ -271,20 +271,6 @@
            </li>
           </ul>
 
-          <!-- XXX: Only available if DEBUGGING === true -->
-          <header class="debug-only">
-            <h2>Development</h2>
-          </header>
-          <ul class="settings debug-only">
-            <li>
-              <label class="end">
-                <input class="settings-option" data-option="fte" type="checkbox" data-type="switch" />
-                <span></span>
-              </label>
-              <p>Enable first time experience</p>
-            </li>
-          </ul>
-
           <!-- Phone activity -->
           <header id="phone-activity-settings" aria-hidden="true">
             <h2 data-l10n-id="phone-activity">Phone Activity</h2>
@@ -482,7 +468,7 @@
         <div class="center">
           <h3 data-l10n-id="weekday-reset-setup-title">Select period start day</h3>
           <ul role="listbox">
-            <li>
+            <li class="monday">
               <label for="reset-weekday-option-monday">
                 <input type="radio" id="reset-weekday-option-monday" name="reset-weekday-option" checked="checked" value="1" />
                 <span data-l10n-id="monday">Monday</span>
@@ -518,7 +504,7 @@
                 <span data-l10n-id="saturday">Saturday</span>
               </label>
             </li>
-            <li>
+            <li class="sunday">
               <label for="reset-weekday-option-sunday">
                 <input type="radio" id="reset-weekday-option-sunday" name="reset-weekday-option" value="0" />
                 <span data-l10n-id="sunday">Sunday</span>
