@@ -196,7 +196,7 @@
 }
 
 #lockscreen-mute.vibration {
-  background: transparent url('./images/vibration.png') no-repeat center center / 10rem;
+  background: transparent url('/style/sleep_menu/images/vibration.png') no-repeat center center / 5rem;
 }
 
 .lockscreen-clock {
